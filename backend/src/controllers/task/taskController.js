@@ -126,3 +126,39 @@ export const updateTask = asyncHandler(async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+// delete a task
+
+export const deleteTask = asyncHandler(async (req, res) => {
+    try {
+        const {id} = req.params;
+        const userId = req.user._id;
+
+        // Check if Task ID is proved
+        if(!id) {
+            return res.status(400).json({message:"Id is required"});
+        }
+
+        //Fetch Task by ID
+
+        const task = await TaskModel.findById(id);
+        if(!task) {
+            return res.status(404).json({message:"Task not found"});
+        }
+
+        // Check if the logged-in user is authorized to access the task
+
+        if (!task.userId.equals(userId)) {
+            return res.status(403).json({message:"Not authorized to view this task"});
+        }
+
+        // Delete the task
+
+        await TaskModel.findByIdAndDelete(id);
+        return res.status(200).json({message:"Task deleted successfully"});
+
+    } catch (error) {
+        console.log("Error in deleting task: ", error.message);
+        res.status(500).json({ message: error.message });
+    }
+});
