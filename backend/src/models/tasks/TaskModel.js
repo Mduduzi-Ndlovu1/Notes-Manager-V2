@@ -1,6 +1,14 @@
 import mongoose from "mongoose";
 
 const taskSchema = new mongoose.Schema({
+
+    type:{
+        type: String,
+        required: true,
+        default: "task",
+        enum: ["task", "note"],
+    },
+
     title: {
         type: String,
         required: true,
