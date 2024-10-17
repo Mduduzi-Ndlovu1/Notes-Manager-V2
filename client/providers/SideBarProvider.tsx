@@ -1,8 +1,14 @@
+"use client"
+import Sidebar from '@/app/Components/Sidebar/Sidebar'
+import { useUserContext } from '@/context/userContext'
 import React from 'react'
 
 function SideBarProvider() {
+  const userId = useUserContext().user._id
   return (
-    <div>SideBarProvider</div>
+    <>
+      {userId && <Sidebar/>}
+    </>
   )
 }
 
