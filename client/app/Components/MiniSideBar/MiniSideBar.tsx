@@ -12,18 +12,17 @@ import path from 'path'
 import React from 'react'
 
 const MiniSideBar = () => {
+  const pathname = usePathname();
 
-  const getStrokeColor = (path: string) => {
-    const pathname = usePathname();
+  const getStrokeColor = (link: string) => {
 
-    const getStrokeColor = (link: string) => {
       return pathname === link ? "#3aafae" : "#71717a";
     };
-  }
+  
 
   const navItems = [
     {
-      icon: <IconGrid />,
+      icon: <IconGrid strokeColor={getStrokeColor("/")}/>,
       title: "All",
       link: "/",
     },
