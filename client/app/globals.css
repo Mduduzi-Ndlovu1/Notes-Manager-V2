@@ -28,6 +28,10 @@ form > img {
   object-fit: cover;
 }
 
+.main-layout::-webkit-scrollbar{
+  width: 2px;
+}
+
 /* Utilities styles */
 
 .u-triangle::before{

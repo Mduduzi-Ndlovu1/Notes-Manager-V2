@@ -43,9 +43,9 @@ export default function RootLayout({
                   <MainLayout>
                     {children}
                   </MainLayout>
-                  <SideBarProvider/>
                 </MainContentLayout>
               </div>
+              <SideBarProvider/>
             </div>
           </UserProvider>
         </body>
