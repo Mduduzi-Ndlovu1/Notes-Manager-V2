@@ -10,6 +10,10 @@ function Sidebar() {
       <div className='mt-4 mx-6'>
         <RadioChart/>
       </div>
+
+      <button className='mt-auto mb-6 py-6 px-8 mx-6 bg-[#EB4e31] text-white rounded-[50px] hover:bg-[#3aafae] transition duration-200 ease-in-out '>
+        Sign Out
+      </button>
     </div>
   )
 }
