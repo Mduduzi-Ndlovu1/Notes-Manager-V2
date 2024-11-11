@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useUserContext } from './userContext';
 import axios from 'axios';
 import { description } from '@/app/Components/RadioChart/RadioChart';
+import toast from 'react-hot-toast';
 
 
 const TasksContext = createContext();
@@ -20,8 +21,38 @@ export const TasksProvider = ({ children}) => {
     const [loading, setLoading] = useState(false);
     const [task, setTask] = useState({});
 
+    const [isEditing, setIsEditing] = useState(false);
+
     const [priority, setPriority] = useState("all");
+
+    const [activeTask, setActiveTask] = useState(null);
+    const [modelMode, setModelMode] = useState("");
+    const [profileModel,setProfileModel] = useState(false)
     
+    const toggleModelForAdd = () => {
+        setModelMode("add")
+        setIsEditing(true);
+        setTask({});
+    }
+
+    const toggleModelForEdit = (task) => {
+        setModelMode("edit")
+        setIsEditing(true);
+        setTask(task)
+        setTask({});
+    }
+
+    const openProfileModel = () => {
+        setProfileModel(true)
+    }
+
+    const closeModal = () => {
+        setIsEditing(false);
+        setProfileModel(false);
+        setModelMode("");
+        setActiveTask(null);
+        setTask({});
+    }
     
 
     // now we fetch the data
@@ -52,7 +83,7 @@ export const TasksProvider = ({ children}) => {
         setLoading(true);
         try {
             const response = await axios.get(`${serverUrl}/tasks`);
-            setTasks(response.data);
+            setTasks(response.data.tasks);
         } catch (error) {
             console.log("Error getting tasks", error);
         }
@@ -65,6 +96,7 @@ export const TasksProvider = ({ children}) => {
         try {
             const response = await axios.post(`${serverUrl}/task/create`, task);
             setTasks([...tasks, response.data]);
+            toast.success(" Task Created Successfully ")
         } catch (error) {
             console.log("Error creating task", error);
         }
@@ -104,7 +136,16 @@ export const TasksProvider = ({ children}) => {
         getTasks();
         
         
-    }, [userId])
+    }, [userId]);
+
+    const handleInput = (name) => (e) => {
+        if(name === "setTask"){
+            setTask(e)
+        }else {
+            setTask({...task, [name]: e.target.value});
+        }
+    }
+
     return (
         <TasksContext.Provider value={{
             tasks,
@@ -115,7 +156,17 @@ export const TasksProvider = ({ children}) => {
             updateTask,
             deleteTask,
             priority,
-            setPriority
+            setPriority,
+            handleInput,
+            isEditing,
+            setIsEditing,
+            toggleModelForAdd,
+            toggleModelForEdit,
+            openProfileModel,
+            activeTask,
+            closeModal
+
+            
         }}>
             {children}
         </TasksContext.Provider>
