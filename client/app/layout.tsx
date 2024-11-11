@@ -37,7 +37,7 @@ export default function RootLayout({
 
             <div className="h-full flex overflow-hidden">
               <MiniSideBar/>
-              <div className="flex-1 flex flex-col">
+              <div className="flex flex-1 flex-col">
                 <Header/>
                 <MainContentLayout>
                   <MainLayout>
