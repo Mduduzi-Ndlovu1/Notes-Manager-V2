@@ -38,8 +38,7 @@ export const TasksProvider = ({ children}) => {
     const toggleModelForEdit = (task) => {
         setModelMode("edit")
         setIsEditing(true);
-        setTask(task)
-        setTask({});
+        setActiveTask(task);
     }
 
     const openProfileModel = () => {
@@ -61,7 +60,6 @@ export const TasksProvider = ({ children}) => {
 
     // get individual task
     const getTask = async (taskId) => {
-        console.log(taskId)
         if(!taskId){
             console.log("No task id provided");
             return;
@@ -110,10 +108,12 @@ export const TasksProvider = ({ children}) => {
         try {
             const response = await axios.patch(`${serverUrl}/task/${task._id}`, task);
 
-            const updatedTasks = tasks.map((t) => (t.id === response.data._id ? response.data : t));
+            const updatedTasks = tasks.map((t) => (t._id === response.data._id ? response.data : t));
             setTasks(updatedTasks);
+            toast.success(" Task Updated Successfully ")
         } catch (error) {
             console.log("Error updating task", error);
+            toast.error("Failed to update task")
         }
         setLoading(false)
     }
@@ -164,7 +164,9 @@ export const TasksProvider = ({ children}) => {
             toggleModelForEdit,
             openProfileModel,
             activeTask,
-            closeModal
+            closeModal,
+            modelMode,
+            
 
             
         }}>

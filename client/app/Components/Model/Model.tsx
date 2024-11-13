@@ -6,10 +6,11 @@ import React, { useEffect } from 'react'
 
 function Model() {
 
-    const {task, handleInput, createTask,isEditing,closeModal} = useTasks();
+    const {task, handleInput, createTask,isEditing,closeModal,modelMode,activeTask,updateTask} = useTasks();
 
     const ref = React.useRef(null);
 
+    // This hook is for detcting clicks outside the model
     useDetectOutside({ref, callback: () => {
         if(isEditing) {
             closeModal();
@@ -17,11 +18,22 @@ function Model() {
     }})
     // 4:00:09
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+        if(modelMode === "edit" && activeTask) {
+            handleInput("setTask")(activeTask)
+        }
+    }, [modelMode,activeTask]);
 
     const handleSumit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        createTask(task);
+
+        if(modelMode === "edit") {
+            updateTask(task);
+        }else if(modelMode === "add") {
+            createTask(task);
+        }
+
+        closeModal()
     }
   return (
     <div className='fixed left-0 top-0 z-50 h-full w-full bg-[#333]/30 overflow-hidden'>
@@ -62,9 +74,9 @@ function Model() {
                     value={task.priority}
                     onChange={(e) => handleInput("priority")(e)}
                 > 
-                <option value="low">Low</option>
-                <option value="medium">medium</option>
-                <option value="high">high</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
                 </select>
             </div>
             {/* Due Date */}
@@ -100,9 +112,14 @@ function Model() {
             </div>
             {/* Shows create task button or Edit task button */}
             <div className='mt-8'>
-                <button type='submit'>
-                    Create Task    
+                <button type='submit'
+                    className={`text-white py-2 rounded-md w-full 
+                        hover:bg-blue-500 transition duration-200 ease-in-out
+                        ${modelMode === "edit" ? "bg-blue-400" : "bg-green-400"}`}
+                >
+                    {modelMode === "edit" ? "Update Task" : "Create Task"}    
                 </button> 
+                {/* 4:05 */}
             </div>
         </form>
     </div>
