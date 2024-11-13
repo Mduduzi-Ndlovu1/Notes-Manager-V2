@@ -146,6 +146,14 @@ export const TasksProvider = ({ children}) => {
         }
     }
 
+    // Get Completed Tasks
+
+    const completedTasks = tasks.filter((t) => t.completed);
+
+    // Get Pending Tasks
+
+    const activeTasks = tasks.filter((t) => !t.completed);
+
     return (
         <TasksContext.Provider value={{
             tasks,
@@ -166,6 +174,9 @@ export const TasksProvider = ({ children}) => {
             activeTask,
             closeModal,
             modelMode,
+            completedTasks,
+            activeTasks,
+            
             
 
             
