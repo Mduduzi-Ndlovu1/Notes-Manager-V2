@@ -4,12 +4,15 @@ import useRedirect from "@/hooks/useUserRedirect";
 import Filters from "./Components/Filters/Filters";
 import TaskItem from "./Components/TaskItem/TaskItem";
 import { Task } from "@/utils/types";
+import { filterTasks } from "@/lib/utils";
+
 
 export default function Home() {
   useRedirect("/login");
 
-  const { tasks, toggleModelForAdd } = useTasks();
-  
+  const { tasks, toggleModelForAdd, priority } = useTasks();
+  const filtered = filterTasks(tasks, priority);
+  console.log(filtered)
   console.log(tasks)
   return (
     <main className="m-6 h-full container">
@@ -19,13 +22,13 @@ export default function Home() {
         </h1>
         <Filters/>
 
-      <div></div>
+      
 
       </div>
 
       <div className="pb-[2rem] mt-6 grid grid-cols-[repeat(auto-fill,minmax(302px,1fr))] gap-[1.5rem]">
           {
-            tasks?.map((task: Task, i: number) => (
+            filtered.map((task: Task, i: number) => (
               <TaskItem key={i} task={task}/>
             )
             )

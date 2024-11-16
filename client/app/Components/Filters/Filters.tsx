@@ -5,7 +5,7 @@ function Filters() {
     const {priority, setPriority} = useTasks();
     const [activeIndex, setActiveIndex] = useState(0);
 
-    const priorities = ["All", "Low", "Medium", "Urgent"]
+    const priorities = ["All", "Low", "Medium", "High"]
   return (
     <div className='relative py-2 px-2 grid grid-cols-4 items-center gap-3 bg-[#f9f9f9] border-2 border-white rounded-md'>
         <span className='absolute left-[5px] bg-[#ededed] rounded-md transition-all duration-300' 
