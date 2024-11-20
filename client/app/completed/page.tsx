@@ -6,6 +6,8 @@ import TaskItem from "../Components/TaskItem/TaskItem";
 import { Task } from "@/utils/types";
 import { filterTasks } from "@/lib/utils";
 import { useEffect } from "react";
+import { motion } from "framer-motion";
+import { container, item } from "@/utils/animations";
 
 
 
@@ -31,7 +33,11 @@ export default function Home() {
 
       </div>
 
-      <div className="pb-[2rem] mt-6 grid grid-cols-[repeat(auto-fill,minmax(302px,1fr))] gap-[1.5rem]">
+      <motion.div className="pb-[2rem] mt-6 grid grid-cols-[repeat(auto-fill,minmax(302px,1fr))] gap-[1.5rem]"
+        variants={container}
+        initial="hidden"
+        animate="visible"
+      >
           {
             filtered.map((task: Task, i: number) => (
               <TaskItem key={i} task={task}/>
@@ -40,14 +46,15 @@ export default function Home() {
             
           }
 
-          <button className="h-[16rem] w-full py-2 rounded-md text-lg font-medium text-gray-500 border-dashed border-2 border-gray-400
+          <motion.button className="h-[16rem] w-full py-2 rounded-md text-lg font-medium text-gray-500 border-dashed border-2 border-gray-400
           hover:bg-gray-300 hover:border-none transition duration-200 ease-in-out
           "
           onClick={toggleModelForAdd}
+          variants = {item}
           >
             Add New Task
-          </button>
-      </div>
+          </motion.button>
+      </motion.div>
         
     </main>
   );

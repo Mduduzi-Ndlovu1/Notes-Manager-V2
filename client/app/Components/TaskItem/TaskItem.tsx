@@ -1,8 +1,9 @@
 import { useTasks } from '@/context/taskContext';
 import { formatTime } from '@/providers/utilities';
+import { item } from '@/utils/animations';
 import { edit, star, trash } from '@/utils/icons';
 import { Task } from '@/utils/types'
-
+import { motion } from 'framer-motion';
 import React from 'react'
 
 interface TaskItemProps {
@@ -24,9 +25,11 @@ function TaskItem( {task}: TaskItemProps) {
         }
     }
 
-    const {getTask, toggleModelForEdit,deleteTask,modelMode} = useTasks();
+    const {getTask, toggleModelForEdit,deleteTask,completeTask,modelMode} = useTasks();
   return (
-    <div className='h-[16rem] px-4 py-3 flex flex-col gap-4 shadow-sm bg-[#f9f9f9] rounded-lg border-2 border-white'>
+    <motion.div className='h-[16rem] px-4 py-3 flex flex-col gap-4 shadow-sm bg-[#f9f9f9] rounded-lg border-2 border-white'
+     variants = {item}
+    >
         <div>
             <h4 className='text-2xl font-bold'>
                 {task.title}
@@ -40,7 +43,10 @@ function TaskItem( {task}: TaskItemProps) {
             </p>
             <div className='flex items-center gap-2'>
                 <div className='flex items-center gap-2 text-gray-400 text-[1.5rem]'>
-                <button className={`${task.completed ? 'text-green-400' : 'text-gray-400'}`}>{star}
+                <button className={`${task.completed ? 'text-green-400' : 'text-gray-400'}`}
+                    // when clicked it will make it a completed task
+                    
+                >{star}
                 </button>
                 <button className='text-[#00a1f1]'
                     onClick={() => {
@@ -48,12 +54,14 @@ function TaskItem( {task}: TaskItemProps) {
                         toggleModelForEdit(task)
                     }}
                 >{edit}</button>
-                <button className='text-[#f65314]'>{trash}</button>
+                <button className='text-[#f65314]'
+                    onClick={() => deleteTask(task._id)}
+                >{trash}</button>
                 </div>
             </div>
         </div>
         
-    </div>
+    </motion.div>
   )
 }
 
