@@ -1,5 +1,6 @@
 import { Task } from "@/utils/types"
 import { clsx, type ClassValue } from "clsx"
+import moment from "moment"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -22,4 +23,11 @@ export const filterTasks = (tasks: Task[], priority: string) => {
   };
 
   return filteredTasks()
+}
+
+export const overdueTasks = (tasks: Task[]) => {
+  const todayDate = moment();
+
+  // filter tasks that are not compledted and the due date is before today
+  return tasks.filter((task) => !task.completed && moment(task.dueDate).isBefore(todayDate));
 }
