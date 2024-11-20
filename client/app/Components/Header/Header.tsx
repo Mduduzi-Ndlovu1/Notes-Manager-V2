@@ -1,5 +1,6 @@
 'use client'
 
+import { useTasks } from '@/context/taskContext';
 import { useUserContext } from '@/context/userContext'
 import { star,profile, moon } from '@/utils/icons';
 
@@ -9,6 +10,7 @@ import React from 'react'
 const Header = () => {
 
   const {user} = useUserContext();
+  const {activeTasks, toggleModelForAdd} = useTasks()
 
   const { name} = user;
   const userId = user._id
@@ -23,7 +25,7 @@ const Header = () => {
         <p className='text-sm'>
           {userId ? (
             <>
-            You have <span className='font-bold text-[#3aafae]'>5</span> tasks pending
+            You have <span className='font-bold text-[#3aafae]'>{activeTasks.length}</span> tasks pending
             </>
           ): (
             "Please Login or Register to view Tasks"
@@ -32,7 +34,9 @@ const Header = () => {
       </div>
       <div className='h-[50px] flex items-center gap-[10.4rem]'>
           <button className='px-8 py-3 bg-[#3aafae] text-white font-bold rounded-[50px]
-          hover:bg-[#00a1f1] hover:text-white transition-all duration-200 ease-in-out'>
+          hover:bg-[#00a1f1] hover:text-white transition-all duration-200 ease-in-out'
+          onClick={toggleModelForAdd}
+          >
             Create A new Task
           </button>
 
