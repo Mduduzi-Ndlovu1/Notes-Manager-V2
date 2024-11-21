@@ -16,7 +16,7 @@ export default function Home() {
 
   const { tasks, toggleModelForAdd, priority, activeTask,setPriority } = useTasks();
 
-  const pendingTasks = tasks.filter((t) => !t.completed);
+  const pendingTasks = tasks.filter((t: Task) => !t.completed);
 
   const filtered = filterTasks(pendingTasks, priority);
   
