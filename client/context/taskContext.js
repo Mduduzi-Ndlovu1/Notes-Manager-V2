@@ -56,7 +56,7 @@ export const TasksProvider = ({ children}) => {
 
     // now we fetch the data
 
-    const serverUrl = "http://localhost:8000/api/v1";
+    const serverUrl = "https://notes-manager-v2.onrender.com";
 
     // get individual task
     const getTask = async (taskId) => {
