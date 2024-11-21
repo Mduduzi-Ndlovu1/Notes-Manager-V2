@@ -6,6 +6,7 @@ import { star,profile, moon } from '@/utils/icons';
 
 import Link from 'next/link';
 import React from 'react'
+import toast from 'react-hot-toast';
 
 const Header = () => {
 
@@ -35,9 +36,21 @@ const Header = () => {
       <div className='h-[50px] flex items-center gap-[10.4rem]'>
           <button className='px-8 py-3 bg-[#3aafae] text-white font-bold rounded-[50px]
           hover:bg-[#00a1f1] hover:text-white transition-all duration-200 ease-in-out'
-          onClick={toggleModelForAdd}
+          onClick={() => {
+            if(userId){
+              toggleModelForAdd()
+            } else {
+              // delay for 2 seconds
+              toast.error("You must be logged in to add a task");
+              setTimeout(() => {
+                toast.error("You must be logged in to add a task");
+              }, 2000);
+              
+              window.location.href = '/login'
+            }
+          }}
           >
-            Create A new Task
+            {userId ? 'Add A Task' : 'Login / Register'}
           </button>
 
           <div className='flex items-center gap-4'>

@@ -20,7 +20,7 @@ function page() {
   },[user, router]);
 
   // return nnull or a loading spinner
-  if (user && user) {
+  if (user && userId) {
     return null
   }
   return (

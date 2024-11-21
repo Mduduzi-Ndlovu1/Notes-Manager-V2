@@ -2,12 +2,14 @@
 import React, { useEffect } from "react";
 import RegisterForm from "../Components/auth/RegisterForm/RegisterForm";
 import { useUserContext } from "@/context/userContext";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 
 function page() {
   const { user }= useUserContext();
   const router = useRouter();
+  const userId = user?._id ;
+
   useEffect(() => {
     // redirect to home page if user is already logged in
     if(user && user.Id) {
@@ -16,7 +18,7 @@ function page() {
   },[user, router]);
 
   // return nnull or a loading spinner
-  if (user && user) {
+  if (user && user._id) {
     return null
   }
   return (
