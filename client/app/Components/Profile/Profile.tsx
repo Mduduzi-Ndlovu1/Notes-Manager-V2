@@ -6,14 +6,17 @@ import React from 'react'
 
 function Profile() {
   const {user} = useUserContext();
-  const {tasks, activeTasks,completedTasks} = useTasks();
+  const {tasks, activeTasks,completedTasks, openProfileModel} = useTasks();
   
   return (
     <div className='m-6'>
       {/* Profile greetings has NAme of profile user*/}
         <div className='px-2 py-4 flex items-center gap-3 bg-[#E6e6e6]/20 rounded-[0.8rem]
             hover:bg-[#E6e6e6]/50 transition duration-300 ease-in-out cursor-pointer border-2 border-transparent hover:border-2 hover:border-white 
-        '>
+        '
+        onClick={openProfileModel}
+        // 4:51
+        >
             <div>
               <Image 
                 src={user?.photo}
