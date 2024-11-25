@@ -1,4 +1,4 @@
-```markdown
+
 # **Notes Manager Web Application**
 
 Welcome to the **Notes Manager Web Application** repository! This project is a full-stack web application designed to simplify note-taking and task organization, with an intuitive interface and robust backend features.
