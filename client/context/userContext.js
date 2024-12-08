@@ -102,6 +102,7 @@ export const UserContextProvider = ({ children }) => {
         setLoading(false);
         return loggedIn;
       } catch (error) {
+        console.log("Error checking login status", error);
         toast.error(error.response?.data?.message || "Error checking login status");
         setLoading(false);
       }
