@@ -94,7 +94,11 @@ export const UserContextProvider = ({ children }) => {
           withCredentials: true,
         });
         const loggedIn = !!res.data;
-        if (!loggedIn) router.push("/login");
+        if (!loggedIn) {
+          router.push("/login");
+        } else {
+          await getUser();  // Refresh user details after confirming login status
+        }
         setLoading(false);
         return loggedIn;
       } catch (error) {
