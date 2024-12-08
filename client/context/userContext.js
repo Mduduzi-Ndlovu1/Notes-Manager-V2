@@ -36,7 +36,6 @@ export const UserContextProvider = ({ children }) => {
 
     try {
       const res = await axios.post(`${serverUrl}/api/v1/register`, userState);
-      console.log("User registered successfully", res.data);
       toast.success("User registered successfully");
 
       // clear the form
@@ -49,8 +48,7 @@ export const UserContextProvider = ({ children }) => {
       // redirect to login page
       router.push("/login");
     } catch (error) {
-      console.log("Error registering user", error);
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Error registering user");
     }
   };
 
@@ -88,27 +86,22 @@ export const UserContextProvider = ({ children }) => {
     }
   };
 
-  // get user Looged in Status
-  const userLoginStatus = async () => {
-    let loggedIn = false;
-    try {
-      const res = await axios.get(`${serverUrl}/api/v1/login-status`, {
-        withCredentials: true, // send cookies to the server
-      });
-
-      // coerce the string to boolean
-      loggedIn = !!res.data;
-      setLoading(false);
-
-      if (!loggedIn) {
-        router.push("/login");
+    // get user login status
+    const userLoginStatus = async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get(`${serverUrl}/api/v1/login-status`, {
+          withCredentials: true,
+        });
+        const loggedIn = !!res.data;
+        if (!loggedIn) router.push("/login");
+        setLoading(false);
+        return loggedIn;
+      } catch (error) {
+        toast.error(error.response?.data?.message || "Error checking login status");
+        setLoading(false);
       }
-    } catch (error) {
-      console.log("Error getting user login status", error);
-    }
-
-    return loggedIn;
-  };
+    };
 
   // logout user
   const logoutUser = async () => {
