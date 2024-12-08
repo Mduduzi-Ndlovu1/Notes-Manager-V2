@@ -9,7 +9,7 @@ const UserContext = React.createContext();
 axios.defaults.withCredentials = true;
 
 export const UserContextProvider = ({ children }) => {
-  const serverUrl = "https://notes-manager-v2.onrender.com";
+  const serverUrl = "https://notes-manager-v2-5.onrender.com";
 
   const router = useRouter();
 
