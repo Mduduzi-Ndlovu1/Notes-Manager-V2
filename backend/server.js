@@ -19,6 +19,8 @@ app.use(
     credentials: true,
   })
 );
+console.log("Client URL: ", process.env.CLIENT_URL); // Log to verify the value
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
